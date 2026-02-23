@@ -1,0 +1,32 @@
+{
+  "name": "@sungkhum/flutter-agent",
+  "version": "0.1.0",
+  "description": "Flutter documentation index generator for AI coding agents",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "flutter-agent": "dist/cli/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup cli/index.ts --format esm --platform node --target es2020 --out-dir dist/cli",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "execa": "^8.0.1",
+    "picocolors": "^1.0.0",
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.1",
+    "typescript": "^5.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sungkhum/flutter-agent.git"
+  }
+}

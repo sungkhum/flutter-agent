@@ -1,0 +1,5 @@
+.DS_Store
+node_modules/
+dist/
+.flutter-docs/
+.flutter-docs-index/
