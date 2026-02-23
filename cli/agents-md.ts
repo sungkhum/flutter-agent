@@ -17,6 +17,7 @@ import {
   pullDocs,
   resolveDocsRef,
   ensureGitignoreEntryFor,
+  resolveDocsRoot,
 } from '../lib/agents-md'
 
 class BadInput extends Error {
@@ -122,7 +123,8 @@ export async function runAgentsMd(options: AgentsMdOptions): Promise<void> {
 
   const docsDirName = '.flutter-docs'
   const docsPath = path.join(cwd, docsDirName)
-  const docsLinkPath = `./${docsDirName}`
+  let docsRootPath = docsPath
+  let docsLinkPath = `./${docsDirName}`
 
   const indexDirName = '.flutter-docs-index'
   const indexDirPath = path.join(cwd, indexDirName)
@@ -140,9 +142,12 @@ export async function runAgentsMd(options: AgentsMdOptions): Promise<void> {
     throw new BadInput(`Failed to pull Flutter docs: ${pullResult.error}`)
   }
 
+  docsRootPath = resolveDocsRoot(docsPath)
+  docsLinkPath = `./${path.relative(cwd, docsRootPath).replace(/\\/g, '/')}`
+
   const mergedExtras = mergeExtraDocs(cwd, docsPath)
 
-  const docFiles = collectDocFiles(docsPath)
+  const docFiles = collectDocFiles(docsRootPath)
   const sections = buildDocTree(docFiles)
 
   fs.mkdirSync(indexDirPath, { recursive: true })

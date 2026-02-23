@@ -12,7 +12,7 @@ npx github:sungkhum/flutter-agent agents-md --output AGENTS.md,CLAUDE.md
 ```
 
 This will:
-- Download the Flutter docs into `.flutter-docs/`
+- Download the Flutter docs into `.flutter-docs/` (indexes `src/content/docs/` or `src/content/docs/en/` when present)
 - Build a compact index of markdown files
 - Inject it into your target markdown file(s) (prompted if `--output` is omitted). `CLAUDE.md` receives a compact index.
 - Save the full index at `.flutter-docs-index/full.index.txt`

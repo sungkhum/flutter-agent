@@ -135,6 +135,25 @@ export function mergeExtraDocs(cwd: string, docsPath: string): boolean {
   return true
 }
 
+export function resolveDocsRoot(docsPath: string): string {
+  const candidates = [
+    path.join(docsPath, 'src', 'content', 'docs', 'en'),
+    path.join(docsPath, 'src', 'content', 'docs'),
+    path.join(docsPath, 'site', 'src', 'content', 'docs', 'en'),
+    path.join(docsPath, 'site', 'src', 'content', 'docs'),
+    path.join(docsPath, 'src', 'content'),
+    path.join(docsPath, 'site', 'src', 'content'),
+  ]
+
+  for (const candidate of candidates) {
+    if (fs.existsSync(candidate)) {
+      return candidate
+    }
+  }
+
+  return docsPath
+}
+
 export function collectDocFiles(dir: string): { relativePath: string }[] {
   return (fs.readdirSync(dir, { recursive: true }) as string[])
     .filter(
