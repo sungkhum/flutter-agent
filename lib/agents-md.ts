@@ -94,17 +94,13 @@ export async function pullDocs(ref: string, docsPath: string): Promise<PullResul
       throw error
     }
 
+    const docsRoot = resolveDocsRoot(tempDir)
+
     if (fs.existsSync(docsPath)) {
       fs.rmSync(docsPath, { recursive: true })
     }
 
-    fs.mkdirSync(docsPath, { recursive: true })
-    fs.cpSync(tempDir, docsPath, { recursive: true })
-
-    const gitDir = path.join(docsPath, '.git')
-    if (fs.existsSync(gitDir)) {
-      fs.rmSync(gitDir, { recursive: true })
-    }
+    fs.cpSync(docsRoot, docsPath, { recursive: true })
 
     return { success: true }
   } catch (error) {
